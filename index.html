@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <base href="./">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b0e12">
+  <meta name="description" content="THE FOX — бесплатные игры, скидки, релизы и игровые новости на русском языке.">
+  <title>THE FOX — игры, скидки и раздачи</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    window.tgLoadTimeout=setTimeout(()=>window.telegramFallback=true,5000);
+  </script>
+  <script src="https://telegram.org/js/telegram-web-app.js" onload="clearTimeout(window.tgLoadTimeout)" onerror="clearTimeout(window.tgLoadTimeout);window.telegramFallback=true"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+</head>
+<body>
+<div class="shell">
+  <header class="top">
+    <div class="top-left">
+      <button class="brand fox-brand" data-goto="home" aria-label="THE FOX">
+        <span class="fox-mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" role="img"><path d="M9 14l14 7 9-8 9 8 14-7-5 19c-2 9-9 17-18 20-9-3-16-11-18-20L9 14z"/><path d="M22 29l8 5-8 4zM42 29l-8 5 8 4z" class="eyes"/><path d="M28 43h8l-4 5z" class="nose"/></svg>
+        </span>
+        <span>THE <span>FOX</span></span>
+      </button>
+    </div>
+    <div class="top-actions">
+      <label class="search">
+        <span>⌕</span><input id="searchInput" type="search" placeholder="Найти игру..." autocomplete="off">
+      </label>
+      <button class="round-btn" id="aboutBtn" aria-label="О проекте THE FOX">?</button>
+    </div>
+  </header>
+
+  <main class="main content">
+    <section id="section-home" class="panel active">
+      <div class="intro-row">
+        <div>
+          <p class="micro" id="todayLabel">ИГРОВОЙ РАДАР</p>
+          <h1>Что сегодня<br><span>попало в радар?</span></h1>
+        </div>
+        <div class="intro-copy">
+          <p>THE FOX собирает релизы, скидки, бесплатные раздачи и новости в одном спокойном потоке — без витринного шума.</p>
+          <button class="text-action" data-goto="explorar">Открыть радар →</button>
+        </div>
+      </div>
+
+      <div class="flow-stage">
+        <div class="spotlight">
+          <div class="spotlight-image" id="spotlightImage"></div>
+          <div class="spotlight-shade"></div>
+          <div class="spotlight-copy">
+            <span class="pill lime">ВЫБОР THE FOX</span>
+            <h2 id="spotlightTitle">Игры без лишнего шума</h2>
+            <p id="spotlightText">Следим за новинками, ценами и временно бесплатными играми.</p>
+            <button class="spotlight-btn" data-goto="ofertas">Смотреть скидки <b>↗</b></button>
+          </div>
+          <div class="spotlight-index">FOX / LIVE</div>
+        </div>
+
+        <aside class="pulse">
+          <div class="pulse-head"><span>LIVE PULSE</span><b>ONLINE</b></div>
+          <div class="pulse-number"><strong id="statDeals">—</strong><small>активных скидок</small></div>
+          <div class="pulse-divider"></div>
+          <div class="pulse-number"><strong id="statFree">—</strong><small>бесплатно сейчас</small></div>
+          <div class="pulse-divider"></div>
+          <div class="pulse-foot">Данные обновляются через открытые API и публичные игровые фиды.</div>
+        </aside>
+      </div>
+
+      <div class="flow-note">
+        <span class="note-icon">↗</span>
+        <p><b>THE FOX не является магазином.</b> Мы агрегируем данные Steam, Epic Games, GOG и других площадок. Финальную цену, регион и условия акции всегда проверяйте на странице магазина.</p>
+      </div>
+
+      <section class="module">
+        <div class="module-label"><span>01</span><b>СВЕЖИЕ РЕЛИЗЫ</b><i></i><em>ОБНОВЛЯЕТСЯ</em></div>
+        <div id="carousel-nuevos-home" class="flow-rail carousel"></div>
+      </section>
+
+      <section class="module deal-module">
+        <div class="module-label"><span>02</span><b>КАРТА СКИДОК</b><i></i><em>ЛУЧШИЕ ПАДЕНИЯ ЦЕН</em></div>
+        <div id="carousel-ofertas-home" class="dealboard"></div>
+      </section>
+
+      <section class="module free-module">
+        <div class="module-label"><span>03</span><b>БЕСПЛАТНО</b><i></i><em>РАЗДАЧИ + F2P</em></div>
+        <div id="carousel-gratis-home" class="free-wall"></div>
+      </section>
+
+      <section class="module news-module">
+        <div class="module-label"><span>04</span><b>НОВОСТИ</b><i></i><em>НА РУССКОМ</em></div>
+        <div id="news-list-home" class="news-stream"></div>
+      </section>
+    </section>
+
+    <section id="section-nuevos" class="panel">
+      <div class="page-top"><p class="micro">FLOW / DISCOVERY</p><h2>Новые игры</h2><p>Недавние релизы и игры, которые активно добавляют в библиотеки.</p></div>
+      <div id="grid-nuevos" class="mosaic-grid"></div>
+      <div id="sentinel-nuevos" class="scroll-sentinel"><span></span><span></span><span></span></div>
+    </section>
+
+    <section id="section-gratis" class="panel">
+      <div class="page-top"><p class="micro">ZERO COST</p><h2>Бесплатные игры</h2><p>Временные раздачи Epic/Steam/GOG и бесплатные F2P-проекты из открытых источников.</p></div>
+      <div id="grid-gratis" class="mosaic-grid free-page-grid"></div>
+    </section>
+
+    <section id="section-ofertas" class="panel">
+      <div class="page-top"><p class="micro">PRICE FLOW</p><h2>Скидки</h2><p>Игры, у которых цена действительно снизилась. Цены CheapShark отображаются в USD.</p></div>
+      <div id="grid-ofertas" class="deal-page"></div>
+      <div id="sentinel-ofertas" class="scroll-sentinel"><span></span><span></span><span></span></div>
+    </section>
+
+    <section id="section-noticias" class="panel">
+      <div class="page-top"><p class="micro">SIGNAL / RU</p><h2>Игровые новости</h2><p>Русские источники идут первыми; международные новости автоматически переводятся на русский, когда перевод доступен.</p></div>
+      <div id="news-list" class="news-grid"></div>
+    </section>
+
+    <section id="section-explorar" class="panel">
+      <div class="explore-head">
+        <div><p class="micro">GAME RADAR</p><h2>Собери свой поток</h2><p>Выбери жанр или начни вводить название игры.</p></div>
+        <div class="explore-command"><span>/</span><input id="searchInputMirror" placeholder="Поиск..." disabled></div>
+      </div>
+      <div id="genreChips" class="chips carousel"></div>
+      <div id="grid-explorar" class="mosaic-grid explore-grid"></div>
+      <div id="sentinel-explorar" class="scroll-sentinel"><span></span><span></span><span></span></div>
+    </section>
+  </main>
+
+  <nav class="dock" aria-label="Основная навигация">
+    <div class="dock-track">
+      <button class="dock-item active" data-section="home" aria-label="Главная">
+        <span class="dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 10.8 12 3l9 7.8v8.7a1.5 1.5 0 0 1-1.5 1.5h-5v-6h-5v6h-5A1.5 1.5 0 0 1 3 19.5z"/></svg></span><b>Главная</b>
+      </button>
+      <button class="dock-item" data-section="gratis" aria-label="Бесплатно">
+        <span class="dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 12v8.2a1.8 1.8 0 0 1-1.8 1.8H5.8A1.8 1.8 0 0 1 4 20.2V12h16ZM3 7.5h18v3H3zM12 7.5H8.6A2.6 2.6 0 1 1 11 4.1l1 3.4Zm0 0 1-3.4a2.6 2.6 0 1 1 2.4 3.4H12Z"/></svg></span><b>Бесплатно</b>
+      </button>
+      <button class="dock-item" data-section="ofertas" aria-label="Скидки">
+        <span class="dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3.4 13.4a2 2 0 0 1 0-2.8l7.2-7.2a2 2 0 0 1 1.4-.6H18a3 3 0 0 1 3 3v5.9a2 2 0 0 1-.4 1.7ZM16.5 8A1.5 1.5 0 1 0 16.5 5a1.5 1.5 0 0 0 0 3Z"/></svg></span><b>Скидки</b>
+      </button>
+      <button class="dock-item" data-section="noticias" aria-label="Новости">
+        <span class="dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h16a1 1 0 0 1 1 1v14.2a.8.8 0 0 1-1.2.7l-2.3-1.3-2.3 1.3-2.3-1.3-2.3 1.3-2.3-1.3-2.3 1.3-2.3-1.3-1.5.8V5a1 1 0 0 1 1-1Zm3 4v2h10V8H7Zm0 4v2h7v-2H7Z"/></svg></span><b>Новости</b>
+      </button>
+      <button class="dock-item" data-section="explorar" aria-label="Радар">
+        <span class="dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 8.5 6h-2.1A7 7 0 1 1 15 5.1V3.3A9 9 0 0 0 12 3Zm4 0v5h5l-2-2 2.8-2.8A9 9 0 0 0 16 3Z"/></svg></span><b>Радар</b>
+      </button>
+    </div>
+  </nav>
+</div>
+
+<div id="sheetBackdrop" class="sheet-backdrop">
+  <div class="detail-sheet">
+    <button class="sheet-close" id="sheetCloseBtn" aria-label="Закрыть">×</button>
+    <div id="sheetCover" class="sheet-cover"></div>
+    <div class="sheet-body">
+      <p class="micro">THE FOX / DETAIL</p>
+      <h3 id="sheetTitle"></h3>
+      <p id="sheetMeta" class="sheet-meta"></p>
+      <div id="sheetRatings" class="sheet-ratings"></div>
+      <div id="sheetDesc" class="sheet-desc"></div>
+      <div id="sheetStores" class="sheet-stores"></div>
+    </div>
+  </div>
+</div>
+
+<div id="aboutBackdrop" class="sheet-backdrop">
+  <div class="detail-sheet about-sheet">
+    <button class="sheet-close" id="aboutClose" aria-label="Закрыть">×</button>
+    <div class="sheet-body">
+      <p class="micro">THE FOX / ABOUT</p>
+      <h3>Найди игру.<br>Проверь цену.</h3>
+      <p class="sheet-desc">THE FOX — независимый агрегатор игровых предложений, раздач, релизов и новостей. Это не магазин и не продавец ключей.</p>
+      <p class="sheet-desc">Источники: RAWG, CheapShark, GamerPower, Epic Games, FreeToGame и открытые RSS-фиды. Для GamerPower и FreeToGame требуется указание источника.</p>
+      <p class="sheet-meta">THE FOX · TELEGRAM MINI APP / WEB</p>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
